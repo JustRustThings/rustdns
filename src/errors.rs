@@ -72,4 +72,7 @@ pub enum ParseError {
 
     #[error("invalid rname email address: '{0}'")]
     InvalidRname(String),
+
+    #[error("invalid reverse ip: '{0}'")]
+    InvalidArpaName(String),
 }

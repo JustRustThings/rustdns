@@ -92,6 +92,7 @@ The following optional features are available:
   - `tcp`: Enables the DNS over TCP client
   - `udp`: Enables the DNS over UDP client
 - `zones`: Enable a Zone File Parser
+- `display`: Enable dig style Display implementation on structs
 
 ## Usage (cli)
 

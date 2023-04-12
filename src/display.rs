@@ -6,16 +6,14 @@ use crate::resource::TXT;
 use crate::resource::MX;
 use crate::resource::SOA;
 use crate::resource::SRV;
-use crate::Message;
 use crate::Question;
 use crate::Record;
 use crate::Resource;
-use crate::Stats;
-use chrono::prelude::*;
 use std::fmt;
 
 /// Displays this message in a format resembling `dig` output.
-impl fmt::Display for Message {
+#[cfg(feature = "display")]
+impl fmt::Display for crate::Message {
     // TODO There seems to be whitespace/newlines in this output. Fix.
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         self.fmt_header(f)?;
@@ -73,7 +71,8 @@ impl fmt::Display for Message {
     }
 }
 
-impl Message {
+#[cfg(feature = "display")]
+impl crate::Message {
     fn fmt_header(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(
             f,
@@ -121,12 +120,13 @@ impl Message {
     }
 }
 
-impl fmt::Display for Stats {
+#[cfg(feature = "display")]
+impl fmt::Display for crate::Stats {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, ";; Query time: {} msec", self.duration.as_millis())?; // TODO Support usec as well
         writeln!(f, ";; SERVER: {}", self.server)?;
 
-        let start: chrono::DateTime<Local> = self.start.into();
+        let start: chrono::DateTime<chrono::Local> = self.start.into();
         // ;; WHEN: Sat Jun 12 12:14:21 PDT 2021
         writeln!(f, ";; WHEN: {}", start.format("%a %b %-d %H:%M:%S %z %-Y"))?;
         writeln!(
